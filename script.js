@@ -4,50 +4,63 @@ const country = document.getElementById("country");
 const zip = document.getElementById("zip");
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("password-confirm");
-const errorMessage = document.querySelector(".error");
+
+const getErrorElement = (input) => {
+	return input.nextElementSibling;
+};
 
 email.addEventListener("input", (event) => {
+	const errorElement = getErrorElement(email);
+
 	if (email.validity.valid) {
-		errorMessage.textContent = "";
-		errorMessage.className = "error";
+		errorElement.textContent = "";
+		errorElement.className = "error";
 	} else {
-		showError();
+		showError(email, errorElement);
 	}
 });
 
 country.addEventListener("input", (event) => {
+	const errorElement = getErrorElement(country);
+
 	if (country.validity.valid) {
-		errorMessage.textContent = "";
-		errorMessage.className = "error";
+		errorElement.textContent = "";
+		errorElement.className = "error";
 	} else {
-		showError();
+		showError(country, errorElement);
 	}
 });
 
 zip.addEventListener("input", (event) => {
+	const errorElement = getErrorElement(zip);
+
 	if (zip.validity.valid) {
-		errorMessage.textContent = "";
-		errorMessage.className = "error";
+		errorElement.textContent = "";
+		errorElement.className = "error";
 	} else {
-		showError();
+		showError(zip, errorElement);
 	}
 });
 
 password.addEventListener("input", (event) => {
+	const errorElement = getErrorElement(password);
+
 	if (password.validity.valid) {
-		errorMessage.textContent = "";
-		errorMessage.className = "error";
+		errorElement.textContent = "";
+		errorElement.className = "error";
 	} else {
-		showError();
+		showError(password, errorElement);
 	}
 });
 
 confirmPassword.addEventListener("input", (event) => {
+	const errorElement = getErrorElement(confirmPassword);
+
 	if (confirmPassword.validity.valid) {
-		errorMessage.textContent = "";
-		errorMessage.className = "error";
+		errorElement.textContent = "";
+		errorElement.className = "error";
 	} else {
-		showError();
+		showError(confirmPassword, errorElement);
 	}
 });
 
@@ -62,34 +75,30 @@ form.addEventListener("submit", (event) => {
 		showError();
 		event.preventDefault();
 	} else {
-        alert("Thanks for submitting the form to nowhere!");
-    }
+		alert("Thanks for submitting the form to nowhere!");
+		event.preventDefault();
+
+		let inputs = document.querySelectorAll("input");
+		inputs.forEach((input) => (input.value = ""));
+	}
 });
 
-const showError = () => {
-	if (email.validity.valueMissing) {
-		errorMessage.textContent = "Please enter an email address.";
-	} else if (email.validity.typeMismatch) {
-		errorMessage.textContent =
-			"Entered value needs to be an email address.";
-	} else if (country.validity.valueMissing) {
-		errorMessage.textContent = "Please enter a country.";
-	} else if (country.validity.tooShort) {
-		errorMessage.textContent = `Country should be at least ${country.minLength} characters; you entered ${country.value.length}.`;
-	} else if (zip.validity.valueMissing) {
-		errorMessage.textContent = "Please enter a zip code.";
-	} else if (zip.validity.tooShort) {
-		errorMessage.textContent = `Zip code should be at least ${zip.minLength} characters; you entered ${zip.value.length}.`;
-	} else if (password.validity.valueMissing) {
-		errorMessage.textContent = "Please enter a password.";
-	} else if (password.validity.tooShort) {
-		errorMessage.textContent = `Passwords should be at least ${password.minLength} characters; you entered ${password.value.length}.`;
-	} else if (confirmPassword.validity.valueMissing) {
-		errorMessage.textContent = "Please confirm your password.";
-	} else if (confirmPassword.validity.tooShort) {
-		errorMessage.textContent = `Passwords should be at least ${confirmPassword.minLength} characters; you entered ${confirmPassword.value.length}.`;
-	} else if (password.value !== confirmPassword.value) {
-		errorMessage.textContent = "Passwords do not match.";
+const showError = (input, errorElement) => {
+	if (input.validity.valueMissing) {
+		errorElement.textContent = `Please enter ${input.name}.`;
+	} else if (input.validity.typeMismatch) {
+		errorElement.textContent = `The entered value needs to be an ${input.name}.`;
+	} else if (input.validity.tooShort) {
+		errorElement.textContent = `There should be at least ${input.minLength} characters; you entered ${input.value.length}.`;
+	} else if (input.validity.tooLong) {
+		errorElement.textContent = `There should be at least ${input.maxLength} characters; you entered ${input.value.length}.`;
+	} else if (input.validity.patternMismatch) {
+		errorElement.textContent = `The entered value does not match the required zip code length.`;
 	}
-	errorMessage.className = "error active";
+
+	if (input.id === "password-confirm" && input.value !== password.value) {
+		errorElement.textContent = "Your passwords do not match.";
+	}
+
+	errorElement.className = "error active";
 };
