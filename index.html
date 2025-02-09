@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>TOP: Form Validation</title>
+</head>
+
+<body>
+    <main class="container">
+        <h1>Odin Forms</h1>
+        <form novalidate>
+            <ul>
+                <li>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" minlength="5" maxlength="30" placeholder="you@example.com" required>
+                    <span class="error" aria-live="polite"></span>
+                </li>
+                <li>
+                    <label for="country">Country</label>
+                    <input type="text" name="country" id="country" minlength="2" placeholder="United States" required>
+                    <span class="error" aria-live="polite"></span>
+                </li>
+                <li>
+                    <label for="zip">Zip Code</label>
+                    <input type="text" name="zip" id="zip" pattern="\d{5,5}(-\d{4,4})?" minlength="3" placeholder="12345" required>
+                    <span class="error" aria-live="polite"></span>
+                </li>
+                <li>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" minlength="5" autocomplete="password" placeholder="Your secret password" required>
+                    <span class="error" aria-live="polite"></span>
+                </li>
+                <li>
+                    <label for="password-confirm">Confirm Password</label>
+                    <input type="password" name="password-confirm" id="password-confirm" minlength="5"
+                        autocomplete="password-confirm" placeholder="Confirm your secret password" required>
+                    <span class="error" aria-live="polite"></span>
+                </li>
+                <li>
+                    <button type="submit">Send</button>
+                </li>
+            </ul>
+        </form>
+    </main>
+    <script src="./script.js"></script>
+</body>
+
+</html>
